@@ -1,2 +1,42 @@
-# Mac
+# OS metadata
 .DS_Store
+Thumbs.db
+
+# Editor and local workspace state
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+*.swo
+*~
+
+# Garmin Connect IQ build outputs
+bin/
+build/
+out/
+dist/
+gen/
+generated/
+*.prg
+*.iq
+*.barrel
+*.iqar
+*.debug.xml
+
+# Test, coverage, and logs
+test-results/
+coverage/
+*.log
+*.tmp
+*.temp
+
+# Garmin signing keys and local secrets
+*.der
+*.key
+*.pem
+*.p12
+*.pfx
+.env
+.env.*
+!.env.example
