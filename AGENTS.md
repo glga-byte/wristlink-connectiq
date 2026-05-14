@@ -11,6 +11,8 @@ This repository covers only the Connect IQ watch app. The Flutter smartphone app
 - Treat this file as durable project guidance. Keep it concise, operational, and specific to this Connect IQ repository.
 - Prefer established Connect IQ SDK patterns over generic app architecture patterns.
 - When a change adds durable platform constraints, contract rules, verification steps, or project conventions, update this file in the same change.
+- When Paper design files are updated, update the corresponding PNG snapshots
+  in `docs/design/paper/` in the same change so design reviews stay in sync.
 - Do not add research notes, transient implementation plans, or one-off debugging details here. Use implementation notes, PR descriptions, or issue comments for that context.
 
 ## Technologies

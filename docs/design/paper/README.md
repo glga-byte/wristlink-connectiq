@@ -8,6 +8,8 @@ These PNGs are design snapshots for Connect IQ watch app planning. They are not 
 
 - `00-watch-flow.png` - closed-app watch behavior, phone-selected intents, and background delivery outcomes.
 - `received-intents/` - watch UI states for received phone intents.
+- `opened-app/` - main screens and navigation states when the user opens the
+  watch app directly.
 
 ## Update Rules
 
