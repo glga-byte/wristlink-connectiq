@@ -10,7 +10,7 @@ This repository covers only the Connect IQ watch app. The Flutter smartphone app
 
 - Treat this file as durable project guidance. Keep it concise, operational, and specific to this Connect IQ repository.
 - Prefer established Connect IQ SDK patterns over generic app architecture patterns.
-- When a change adds durable platform constraints, contract rules, verification steps, or project conventions, update this file in the same change.
+- When a feature introduces durable project knowledge, architecture rules, platform constraints, verification steps, or conventions that future agents must follow, update `AGENTS.md` as part of the same change.
 - When Paper design files are updated, update the corresponding PNG snapshots
   in `docs/design/paper/` in the same change so design reviews stay in sync.
 - Do not add research notes, transient implementation plans, or one-off debugging details here. Use implementation notes, PR descriptions, or issue comments for that context.
@@ -36,25 +36,42 @@ This repository covers only the Connect IQ watch app. The Flutter smartphone app
 ## Recommended Structure
 
 ```text
-manifest.xml              # App id, permissions, products, app type
-monkey.jungle             # Canonical build configuration
+manifest.xml                    # Stable app id, permissions, products, app type, minimum API
+monkey.jungle                   # Canonical source, resource, test, and build configuration
 source/
-  WristLinkApp.mc         # AppBase lifecycle and app-level registration
-  WristLinkView.mc        # Primary watch UI
-  WristLinkDelegate.mc    # Input handling
-  messaging/              # Phone message registration, parsing, ack sending
-  payloads/               # Contract-facing payload models and validation
-  storage/                # Durable state wrappers over Application.Storage
-  ui/                     # Shared drawing, menus, formatting helpers
+  WristLinkApp.mc               # AppBase lifecycle and dependency composition only
+  model/                        # UI-independent session/domain state and transitions
+  navigation/                   # View/delegate creation and stack transitions
+  screens/                      # Screen Views and their focused BehaviorDelegates
+  ui/                           # Shared theme, geometry, Drawables, Selectables, formatting
+  payloads/                     # Contract models and validation; add when messaging begins
+  messaging/                    # Garmin transport and ack/error mapping; add when needed
+  storage/                      # Application.Storage adapters and migrations; add when needed
 resources/
-  strings/
-  layouts/
-  drawables/
+  strings/                      # User-visible and localizable text
+  drawables/                    # Launcher icon and shared static visuals
+  layouts/                      # Reusable managed layouts when they reduce code duplication
+  menus/                        # Native Menu2 resources
+resources-round/                # Optional family overrides; create only when base resources fail
+resources-rectangle/            # Optional family overrides; create only when base resources fail
 tests/
-  payloads/
+  model/                        # State-transition and fixture tests
+  navigation/                   # Semantic action and route tests
+  ui/                           # Pure geometry/formatting tests where practical
+  payloads/                     # Mirror source capability folders as they are introduced
   messaging/
   storage/
+docs/
+  design/                       # Durable runtime and reviewed Paper design references
 ```
+
+- Create capability directories only when they contain implementation; do not add empty placeholders for future messaging, payload, or storage work.
+- Prefer one primary class per `.mc` file and name the file after that class. Keep a screen's View and dedicated delegate together under `screens/`; move only genuinely reusable behavior into `ui/` or `navigation/`.
+- Keep dependency direction explicit: `WristLinkApp` composes dependencies; screens depend on navigation/model/UI abstractions; model, payload, messaging, and storage code must not depend on screen classes.
+- Keep `WristLinkApp` thin. Initialize app-scoped dependencies in lifecycle methods and return the initial view/delegate pair from `getInitialView()`; do not push views from `onStart()`.
+- Put strings, static drawables, native menus, and reusable layouts in resources. Prefer base resources, then family qualifiers, then device-specific qualifiers only when a verified device difference requires them.
+- Do not combine a device qualifier with a family qualifier in one resource directory. Keep localization as the final qualifier when combining supported qualifier types.
+- Define native destination menus as `Menu2` resources and load them through `Rez`; use programmatic menu construction only when runtime-dynamic items require it.
 
 ## Contract And Messaging
 
@@ -83,19 +100,23 @@ tests/
 ## UI And Device Support
 
 - Keep UI simple and glanceable. Watch screens should prioritize the current command, confirmation state, and recovery from missing phone connectivity.
-- Support both touch and button-first devices. Do not assume touchscreen input, extended keys, maps, sensors, AMOLED behavior, or newer APIs without `has` checks or manifest/device gating.
+- The current baseline is Connect IQ API 5.2.0 with explicit `fenix7x` and `edge1040` products. Do not raise the minimum API or broaden products without compiling and exercising the affected device matrix.
+- Use current API 5.2 components: `WatchUi.Menu2`/`Menu2InputDelegate` for native destination menus, `BehaviorDelegate` for portable behaviors, and managed `Button`/`Selectable` controls for shared touch/button activation. Do not add legacy `WatchUi.Menu`/`MenuInputDelegate` fallbacks.
+- Support both touch and physical-button navigation. Do not assume touchscreen input, extended keys, maps, sensors, AMOLED behavior, or APIs newer than 5.2 without `has` checks and manifest/device gating.
 - Keep rendering lightweight. Avoid unnecessary allocations in drawing paths and avoid parsing, storage writes, or communication work inside `onUpdate()`.
 - Keep input delegates focused on input handling. Business logic should live in payload, messaging, or domain helpers.
 - Register message callbacks during app startup or view initialization in a predictable place, and keep callback handlers short.
 
 ## Manifest And Permissions
 
-- Keep `manifest.xml` product support explicit. Test representative round, square, AMOLED, MIP, touch, and button-first devices before broadening supported products.
+- Keep `manifest.xml` product support explicit and test every declared product. Before broadening support, add simulator coverage for each newly introduced screen shape, display technology, and input model rather than inferring support from the current matrix.
+- Keep the minimum API aligned with the oldest supported product. For the current `fenix7x` and `edge1040` baseline, use API 5.2.0 and verify every referenced Toybox API against that level.
 - Keep permissions minimal. Add `Communications` only when phone/watch messaging is required, and document any additional permission in the change notes.
 - Ensure the app type, entry class, supported products, and permissions remain aligned with the intended Watch App / Device App behavior.
 
 ## Testing
 
+- Mirror source capability boundaries under `tests/` so model, navigation, payload, messaging, and storage behavior can be exercised without simulator-only UI tests.
 - Cover payload parsing, validation, schema-version handling, storage migration/defaults, acknowledgement construction, and communication error mapping with Monkey C tests.
 - Add simulator checks for UI or input behavior that unit tests cannot cover.
 - Include malformed and oversized payload cases when changing message handling.
@@ -117,16 +138,18 @@ tests/
 Run relevant checks before handing off changes:
 
 ```sh
-# Compile for at least one supported simulator target.
-monkeyc -f monkey.jungle -o bin/WristLink.prg -w -y "$CONNECTIQ_KEY" -d <device_id>
+# Compile for both baseline simulator targets.
+monkeyc -f monkey.jungle -o bin/WristLink-fenix7x.prg -w -y "$CONNECTIQ_KEY" -d fenix7x
+monkeyc -f monkey.jungle -o bin/WristLink-edge1040.prg -w -y "$CONNECTIQ_KEY" -d edge1040
 
 # Run in the simulator.
 connectiq
-monkeydo bin/WristLink.prg <device_id>
+monkeydo bin/WristLink-fenix7x.prg fenix7x
+monkeydo bin/WristLink-edge1040.prg edge1040
 
 # Run Monkey C unit tests when tests or parsing/storage/messaging logic change.
-monkeyc -f monkey.jungle -o bin/WristLinkTest.prg -w -t -y "$CONNECTIQ_KEY" -d <device_id>
-monkeydo bin/WristLinkTest.prg <device_id> -t
+monkeyc -f monkey.jungle -o bin/WristLinkTest.prg -w -t -y "$CONNECTIQ_KEY" -d fenix7x
+monkeydo bin/WristLinkTest.prg fenix7x -t
 
 # Before Connect IQ Store submission, export an .iq package and verify manifest products.
 ```
@@ -141,3 +164,8 @@ Use these links to verify Connect IQ behavior when touching platform-sensitive c
 - https://developer.garmin.com/connect-iq/api-docs/Toybox/Communications.html
 - https://developer.garmin.com/connect-iq/api-docs/Toybox/Application/Storage.html
 - https://developer.garmin.com/connect-iq/api-docs/Toybox/Test.html
+- https://developer.garmin.com/connect-iq/core-topics/application-and-system-modules/
+- https://developer.garmin.com/connect-iq/core-topics/build-configuration/
+- https://developer.garmin.com/connect-iq/core-topics/resources/
+- https://developer.garmin.com/connect-iq/core-topics/input-handling/
+- https://developer.garmin.com/connect-iq/api-docs/Toybox/WatchUi/Menu2.html
