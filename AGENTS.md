@@ -119,6 +119,8 @@ docs/
 - Mirror source capability boundaries under `tests/` so model, navigation, payload, messaging, and storage behavior can be exercised without simulator-only UI tests.
 - Cover payload parsing, validation, schema-version handling, storage migration/defaults, acknowledgement construction, and communication error mapping with Monkey C tests.
 - Add simulator checks for UI or input behavior that unit tests cannot cover.
+- When simulator verification is required, use Computer Use when available to inspect and interact with the Connect IQ Device Simulator. Exercise the touch and physical-button flows relevant to the change and inspect the rendered result instead of relying only on a successful deploy.
+- Keep builds, deployment, unit tests, and runtime-log collection on the `monkeyc`/`monkeydo` command-line path. If Computer Use is unavailable or simulator access is denied, report the visual or input check as not verified and provide the remaining manual steps; do not claim simulator verification from compilation alone.
 - Include malformed and oversized payload cases when changing message handling.
 
 ## Local Tooling
@@ -148,8 +150,10 @@ monkeydo bin/WristLink-fenix7x.prg fenix7x
 monkeydo bin/WristLink-edge1040.prg edge1040
 
 # Run Monkey C unit tests when tests or parsing/storage/messaging logic change.
-monkeyc -f monkey.jungle -o bin/WristLinkTest.prg -w -t -y "$CONNECTIQ_KEY" -d fenix7x
-monkeydo bin/WristLinkTest.prg fenix7x -t
+monkeyc -f monkey.jungle -o bin/WristLinkTest-fenix7x.prg -w -t -y "$CONNECTIQ_KEY" -d fenix7x
+monkeyc -f monkey.jungle -o bin/WristLinkTest-edge1040.prg -w -t -y "$CONNECTIQ_KEY" -d edge1040
+monkeydo bin/WristLinkTest-fenix7x.prg fenix7x -t
+monkeydo bin/WristLinkTest-edge1040.prg edge1040 -t
 
 # Before Connect IQ Store submission, export an .iq package and verify manifest products.
 ```

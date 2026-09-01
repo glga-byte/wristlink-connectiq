@@ -1,0 +1,6 @@
+<menu id="DestinationMenu" title="@Strings.MenuTitle" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
+    <menu-item id="recent" label="@Strings.MenuRecent"/>
+    <menu-item id="notes" label="@Strings.MenuNotes"/>
+    <menu-item id="status" label="@Strings.MenuStatus"/>
+    <menu-item id="about" label="@Strings.MenuAbout"/>
+</menu>

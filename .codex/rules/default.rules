@@ -1,0 +1,8 @@
+prefix_rule(pattern=["connectiq"], decision="allow", justification = "Launch the Garmin Connect IQ simulator")
+prefix_rule(pattern=["monkeyc", "-f", "monkey.jungle"], decision="allow")
+prefix_rule(pattern=["monkeydo", "bin/WristLink-edge1040.prg", "edge1040"], decision="allow", justification = "Deploy and run the WristLink Edge 1040 build in the Garmin simulator")
+prefix_rule(pattern=["monkeydo", "bin/WristLink-edge1040.prg", "edge1040", ["-a", "-n"]], decision="prompt", justification = "Additional-file transfer and native pairing require approval")
+prefix_rule(pattern=["monkeydo", "bin/WristLinkTest-edge1040.prg", "edge1040", "-t"], decision="allow", justification = "Run WristLink unit tests on the Edge 1040 simulator")
+prefix_rule(pattern=["monkeydo", "bin/WristLink-fenix7x.prg", "fenix7x"], decision="allow", justification = "Deploy and run the WristLink Fenix 7X build in the Garmin simulator")
+prefix_rule(pattern=["monkeydo", "bin/WristLink-fenix7x.prg", "fenix7x", ["-a", "-n"]], decision="prompt", justification = "Additional-file transfer and native pairing require approval")
+prefix_rule(pattern=["monkeydo", "bin/WristLinkTest-fenix7x.prg", "fenix7x", "-t"], decision="allow", justification = "Run WristLink unit tests on the Fenix 7X simulator")

@@ -1,0 +1,17 @@
+<resources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
+    <string id="AppName">WristLink</string>
+    <string id="MenuTitle">WristLink</string>
+    <string id="MenuRecent">Recent Items</string>
+    <string id="MenuNotes">Saved Notes</string>
+    <string id="MenuStatus">Status</string>
+    <string id="MenuAbout">About</string>
+    <string id="Open">Open</string>
+    <string id="Recent">Recent</string>
+    <string id="Launch">Launch</string>
+    <string id="Later">Later</string>
+    <string id="Done">Done</string>
+    <string id="StartTimer">Start timer</string>
+    <string id="SaveNote">Save note</string>
+    <string id="Next">Next</string>
+    <string id="Menu">Menu</string>
+</resources>

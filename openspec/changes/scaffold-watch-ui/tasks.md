@@ -1,9 +1,9 @@
 ## 1. Connect IQ Project Scaffold
 
-- [ ] 1.1 Add `manifest.xml` as a Watch App with one stable generated UUID, `minApiLevel` 5.2.0, only `fenix7x` and `edge1040` products, and no permissions; verify the SDK accepts the manifest for both product builds.
-- [ ] 1.2 Add canonical `monkey.jungle`, launcher icon, string/drawable/menu resources, a shared source-level `UiTheme` color palette, and the planned source/test directories without empty future capability folders; document the Connect IQ resource-schema constraint and verify minimal string, drawable, menu, and theme references resolve in a warning-enabled `monkeyc` build.
-- [ ] 1.3 Implement `WristLinkApp` with `AppBase.getInitialView()` returning the Home view/delegate and no service or persistence lifecycle hooks; verify both simulator profiles launch directly into WristLink Home without a phone.
-- [ ] 1.4 Audit the scaffold against API 5.2.0 and remove any legacy or deprecated API usage; verify compiler output contains no deprecation warnings and source contains no `WatchUi.Menu`, `MenuInputDelegate`, or AppBase property calls.
+- [x] 1.1 Add `manifest.xml` as a Watch App with one stable generated UUID, `minApiLevel` 5.2.0, only `fenix7x` and `edge1040` products, and no permissions; verify the SDK accepts the manifest for both product builds.
+- [x] 1.2 Add canonical `monkey.jungle`, launcher icon, string/drawable/menu resources, a shared source-level `UiTheme` color palette, and the planned source/test directories without empty future capability folders; document the Connect IQ resource-schema constraint and verify minimal string, drawable, menu, and theme references resolve in a warning-enabled `monkeyc` build.
+- [x] 1.3 Implement `WristLinkApp` with `AppBase.getInitialView()` returning the Home view/delegate and no service or persistence lifecycle hooks; verify both simulator profiles launch directly into WristLink Home without a phone.
+- [x] 1.4 Audit the scaffold against API 5.2.0 and remove any legacy or deprecated API usage; verify compiler output contains no deprecation warnings and source contains no `WatchUi.Menu`, `MenuInputDelegate`, or AppBase property calls.
 
 ## 2. Local Demo Model
 
