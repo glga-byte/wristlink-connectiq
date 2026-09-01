@@ -1,8 +1,11 @@
 import Toybox.Lang;
 
 module DemoSessionState {
+    const INBOX_PENDING = "pending";
+    const INBOX_EMPTY = "empty";
     const NAVIGATION_IDLE = "idle";
     const NAVIGATION_LAUNCHED = "launched";
+    const NAVIGATION_DEFERRED = "deferred";
     const TIMER_READY = "ready";
     const TIMER_STARTED = "started";
 }
@@ -28,6 +31,10 @@ class DemoSession {
 
     public function hasPending() {
         return _hasPending;
+    }
+
+    public function inboxState() {
+        return _hasPending ? DemoSessionState.INBOX_PENDING : DemoSessionState.INBOX_EMPTY;
     }
 
     public function recentItems() {
@@ -74,7 +81,8 @@ class DemoSession {
     }
 
     public function deferNavigation() {
-        _navigationOutcome = DemoSessionState.NAVIGATION_IDLE;
+        _navigationOutcome = DemoSessionState.NAVIGATION_DEFERRED;
+        _hasPending = true;
     }
 
     public function startTimer() {

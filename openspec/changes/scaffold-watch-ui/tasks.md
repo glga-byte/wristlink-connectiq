@@ -7,13 +7,13 @@
 
 ## 2. Local Demo Model
 
-- [ ] 2.1 Implement compact local models and `DemoData` fixtures for Trailhead parking, Gate code, the three-minute Tea timer, recent items, notes, status, and About identity; verify unit tests assert the seeded labels, counts, types, and statuses.
-- [ ] 2.2 Implement `DemoSession` state for pending/empty Inbox, selected note, navigation outcome, timer outcome, and session-only saved-note behavior; verify unit tests cover every transition and a fresh session restores the original fixtures.
-- [ ] 2.3 Add Monkey C test configuration for the model layer; verify a `monkeyc -t` build and `monkeydo ... -t` run report all model tests passing on a baseline simulator target.
+- [x] 2.1 Implement compact local models and `DemoData` fixtures for Trailhead parking, Gate code, the three-minute Tea timer, recent items, notes, status, and About identity; verify unit tests assert the seeded labels, counts, types, and statuses.
+- [x] 2.2 Implement `DemoSession` state for pending/empty Inbox, selected note, navigation outcome, timer outcome, and session-only saved-note behavior; verify unit tests cover every transition and a fresh session restores the original fixtures.
+- [x] 2.3 Add Monkey C test configuration for the model layer; verify a `monkeyc -t` build and `monkeydo ... -t` run report all model tests passing on a baseline simulator target.
 
 ## 3. Navigation and Current UI Foundations
 
-- [ ] 3.1 Implement `AppNavigator` as the sole factory for view/delegate pairs and push/pop behavior; verify route tests or a minimal simulator harness cover Home, menu, each destination, received-item details, and Back-stack return paths.
+- [ ] 3.1 Implement `AppNavigator` as the sole factory for view/delegate pairs and push/pop behavior; once the navigation tests are runnable, restore `monkey.jungle` to `base.sourcePath = source;tests` so the complete test tree is included; verify `monkeyc -t` discovers and runs both model and navigation tests, and that route tests or a minimal simulator harness cover Home, menu, each destination, received-item details, and Back-stack return paths.
 - [ ] 3.2 Define the destination menu as a `Menu2` resource under `resources/menus/`, load it through `Rez`, and handle it with `Menu2InputDelegate`; verify the native menu shows Recent Items, Saved Notes, Status, and About in order on both simulators without legacy or programmatic fallback construction.
 - [ ] 3.3 Add shared light/dark theme, safe-area geometry, typography, cards, progress treatment, and primitive icon utilities; verify a representative screen compiles and renders without clipping at 280×280 and 282×470.
 - [ ] 3.4 Add managed `Text`, `TextArea`, `Button`, and `Selectable` screen composition plus a reusable `BehaviorDelegate` activation path; verify physical focus and touch selection dispatch the same semantic action without manual tap hit-testing.

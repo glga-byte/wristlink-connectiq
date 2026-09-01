@@ -11,6 +11,7 @@ This repository covers only the Connect IQ watch app. The Flutter smartphone app
 - Treat this file as durable project guidance. Keep it concise, operational, and specific to this Connect IQ repository.
 - Prefer established Connect IQ SDK patterns over generic app architecture patterns.
 - When a feature introduces durable project knowledge, architecture rules, platform constraints, verification steps, or conventions that future agents must follow, update `AGENTS.md` as part of the same change.
+- When implementation or verification changes the planned sequencing, test scope, or required follow-up work, update the active OpenSpec change's `tasks.md` in the same change so the next step is explicit; do not rely on handoff notes alone.
 - When Paper design files are updated, update the corresponding PNG snapshots
   in `docs/design/paper/` in the same change so design reviews stay in sync.
 - Do not add research notes, transient implementation plans, or one-off debugging details here. Use implementation notes, PR descriptions, or issue comments for that context.

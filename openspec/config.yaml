@@ -29,8 +29,8 @@ schema: spec-driven
 #     guidance:
 #       - Keep the completion summary concise
 
-operations:
-  apply:
-    guidance:
-      - Work through tasks sequentially ONLY by delegating to subagents
-      # - Review each completed task using a separate review subagent before checking off the list
+# operations:
+#   apply:
+#     guidance:
+#       - Work through tasks sequentially ONLY by delegating to subagents
+#       # - Review each completed task using a separate review subagent before checking off the list
