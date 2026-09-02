@@ -15,7 +15,7 @@ class SavedNotesView extends WristLinkView {
         var buttonY = m.y(208, 324);
         var noteNumber = _session.selectedNoteIndex() + 1;
 
-        layout.add(new UiIconDrawable(iconX, iconY, iconSize, UiTheme.INK, Graphics.COLOR_WHITE, "N"));
+        layout.add(new UiIconDrawable(iconX, iconY, iconSize, UiTheme.INK, Graphics.COLOR_WHITE, UiIconKind.NOTE));
         layout.add(UiFactory.centeredText("SAVED NOTES", m, m.y(72, 112), Graphics.FONT_XTINY, UiTheme.TEAL));
         layout.add(UiFactory.centeredText(note.title, m, m.y(90, 138), Graphics.FONT_LARGE, UiTheme.INK));
         layout.add(UiFactory.textArea(note.body, m.contentX, bodyY, m.contentWidth, m.y(54, 82), Graphics.FONT_SMALL, UiTheme.INK, Graphics.TEXT_JUSTIFY_CENTER));

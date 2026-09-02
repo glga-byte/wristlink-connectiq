@@ -13,11 +13,11 @@
 
 ## 3. Navigation and Current UI Foundations
 
-- [ ] 3.1 Implement `AppNavigator` as the sole factory for view/delegate pairs and push/pop behavior; once the navigation tests are runnable, restore `monkey.jungle` to `base.sourcePath = source;tests` so the complete test tree is included; verify `monkeyc -t` discovers and runs both model and navigation tests, and that route tests or a minimal simulator harness cover Home, menu, each destination, received-item details, and Back-stack return paths.
-- [ ] 3.2 Define the destination menu as a `Menu2` resource under `resources/menus/`, load it through `Rez`, and handle it with `Menu2InputDelegate`; verify the native menu shows Recent Items, Saved Notes, Status, and About in order on both simulators without legacy or programmatic fallback construction.
-- [ ] 3.3 Add shared light/dark theme, safe-area geometry, typography, cards, progress treatment, and primitive icon utilities; verify a representative screen compiles and renders without clipping at 280×280 and 282×470.
-- [ ] 3.4 Add managed `Text`, `TextArea`, `Button`, and `Selectable` screen composition plus a reusable `BehaviorDelegate` activation path; verify physical focus and touch selection dispatch the same semantic action without manual tap hit-testing.
-- [ ] 3.5 Keep rendering paths allocation-light and presentation-only; verify code review confirms `onUpdate()` performs drawing without parsing, navigation, session mutation, communications, or storage work.
+- [x] 3.1 Implement `AppNavigator` as the sole factory for view/delegate pairs and push/pop behavior; once the navigation tests are runnable, restore `monkey.jungle` to `base.sourcePath = source;tests` so the complete test tree is included; verify `monkeyc -t` discovers and runs both model and navigation tests, and that route tests or a minimal simulator harness cover Home, menu, each destination, received-item details, and Back-stack return paths.
+- [x] 3.2 Define the destination menu as a `Menu2` resource under `resources/menus/`, load it through `Rez`, and handle it with `Menu2InputDelegate`; verify the native menu shows Recent Items, Saved Notes, Status, and About in order on both simulators without legacy or programmatic fallback construction.
+- [x] 3.3 Add shared light/dark theme, safe-area geometry, typography, cards, progress treatment, and primitive icon utilities; verify a representative screen compiles and renders without clipping at 280×280 and 282×470.
+- [x] 3.4 Add managed `Text`, `TextArea`, `Button`, and `Selectable` screen composition plus a reusable `BehaviorDelegate` activation path; verify physical focus and touch selection dispatch the same semantic action without manual tap hit-testing.
+- [x] 3.5 Keep rendering paths allocation-light and presentation-only; verify code review confirms `onUpdate()` performs drawing without parsing, navigation, session mutation, communications, or storage work.
 
 ## 4. Home and Menu Destination Screens
 

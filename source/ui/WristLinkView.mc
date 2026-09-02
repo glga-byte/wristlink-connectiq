@@ -6,6 +6,7 @@ class WristLinkView extends WatchUi.View {
     protected var _navigator;
     protected var _width;
     protected var _height;
+    private var _background;
 
     public function initialize(session, navigator) {
         View.initialize();
@@ -13,6 +14,7 @@ class WristLinkView extends WatchUi.View {
         _navigator = navigator;
         _width = 0;
         _height = 0;
+        _background = UiTheme.LIGHT_BACKGROUND;
     }
 
     public function isDark() {
@@ -37,14 +39,14 @@ class WristLinkView extends WatchUi.View {
 
     public function rebuild() {
         var metrics = new UiMetrics(_width, _height);
+        _background = UiTheme.background(isDark());
         setLayout(buildLayout(metrics));
         setKeyToSelectableInteraction(true);
         WatchUi.requestUpdate();
     }
 
     public function onUpdate(dc) {
-        var background = UiTheme.background(isDark());
-        dc.setColor(background, background);
+        dc.setColor(_background, _background);
         dc.clear();
         View.onUpdate(dc);
     }

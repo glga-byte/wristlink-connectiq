@@ -7,7 +7,7 @@ class WristLinkApp extends Application.AppBase {
     public function initialize() {
         AppBase.initialize();
         _session = new DemoSession();
-        _navigator = new AppNavigator(_session);
+        _navigator = new AppNavigator(_session, null);
     }
 
     public function getInitialView() {

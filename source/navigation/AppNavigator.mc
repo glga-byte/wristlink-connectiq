@@ -1,7 +1,9 @@
+import Toybox.Lang;
 import Toybox.WatchUi;
 
 module AppRoute {
     const ROUTE_HOME = :home;
+    const ROUTE_MENU = :menu;
     const ROUTE_RECENT = :recent;
     const ROUTE_NOTES = :notes;
     const ROUTE_STATUS = :status;
@@ -11,50 +13,85 @@ module AppRoute {
     const ROUTE_NOTE = :note;
 }
 
+class AppNavigationHooks {
+    public function initialize() {
+    }
+
+    public function pushPair(pair as Array) {
+    }
+
+    public function popPair() {
+    }
+}
+
 class AppNavigator {
     private var _session;
+    private var _navigationHooks as AppNavigationHooks or Null;
 
-    public function initialize(session) {
+    public function initialize(session, navigationHooks as AppNavigationHooks or Null) {
         _session = session;
+        _navigationHooks = navigationHooks;
     }
 
-    public function initialView() {
-        return pairFor(new HomeView(_session, self));
+    public function initialView() as Array {
+        return pairForRoute(AppRoute.ROUTE_HOME);
     }
 
-    private function pairFor(view) {
+    public function pairForRoute(route) as Array or Null {
+        if (route == AppRoute.ROUTE_MENU) {
+            return [new Rez.Menus.DestinationMenu(), new DestinationMenuDelegate(self)];
+        }
+
+        var view = null;
+        if (route == AppRoute.ROUTE_HOME) {
+            view = new HomeView(_session, self);
+        } else if (route == AppRoute.ROUTE_RECENT) {
+            view = new RecentItemsView(_session, self);
+        } else if (route == AppRoute.ROUTE_NOTES) {
+            view = new SavedNotesView(_session, self);
+        } else if (route == AppRoute.ROUTE_STATUS) {
+            view = new StatusView(_session, self);
+        } else if (route == AppRoute.ROUTE_ABOUT) {
+            view = new AboutView(_session, self);
+        } else if (route == AppRoute.ROUTE_NAVIGATION) {
+            view = new ReceivedNavigationView(_session, self);
+        } else if (route == AppRoute.ROUTE_TIMER) {
+            view = new ReceivedTimerView(_session, self);
+        } else if (route == AppRoute.ROUTE_NOTE) {
+            view = new ReceivedNoteView(_session, self);
+        }
+
+        if (view == null) {
+            return null;
+        }
         return [view, new ScreenDelegate(view, self)];
     }
 
-    private function push(view) {
-        WatchUi.pushView(view, new ScreenDelegate(view, self), WatchUi.SLIDE_UP);
+    private function pushPair(pair as Array) {
+        if (_navigationHooks != null) {
+            _navigationHooks.pushPair(pair);
+        } else {
+            WatchUi.pushView(pair[0], pair[1], WatchUi.SLIDE_UP);
+        }
     }
 
     public function showRoute(route) {
-        if (route == AppRoute.ROUTE_RECENT) {
-            push(new RecentItemsView(_session, self));
-        } else if (route == AppRoute.ROUTE_NOTES) {
-            push(new SavedNotesView(_session, self));
-        } else if (route == AppRoute.ROUTE_STATUS) {
-            push(new StatusView(_session, self));
-        } else if (route == AppRoute.ROUTE_ABOUT) {
-            push(new AboutView(_session, self));
-        } else if (route == AppRoute.ROUTE_NAVIGATION) {
-            push(new ReceivedNavigationView(_session, self));
-        } else if (route == AppRoute.ROUTE_TIMER) {
-            push(new ReceivedTimerView(_session, self));
-        } else if (route == AppRoute.ROUTE_NOTE) {
-            push(new ReceivedNoteView(_session, self));
+        var pair = pairForRoute(route);
+        if (pair != null) {
+            pushPair(pair);
         }
     }
 
     public function showMenu() {
-        var menu = new Rez.Menus.DestinationMenu();
-        WatchUi.pushView(menu, new DestinationMenuDelegate(self), WatchUi.SLIDE_UP);
+        pushPair(pairForRoute(AppRoute.ROUTE_MENU));
     }
 
     public function back() {
-        WatchUi.popView(WatchUi.SLIDE_DOWN);
+        if (_navigationHooks != null) {
+            _navigationHooks.popPair();
+        } else {
+            WatchUi.popView(WatchUi.SLIDE_DOWN);
+        }
     }
 
     public function routeForMenuId(id) {

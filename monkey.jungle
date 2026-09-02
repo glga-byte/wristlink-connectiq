@@ -1,5 +1,5 @@
 project.manifest = manifest.xml
 # Test functions are marked (:test), so the compiler excludes them from normal
 # application builds and includes them when monkeyc is invoked with -t.
-base.sourcePath = source;tests/model
+base.sourcePath = source;tests
 base.resourcePath = resources

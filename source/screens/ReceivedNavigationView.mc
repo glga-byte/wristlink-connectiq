@@ -16,12 +16,12 @@ class ReceivedNavigationView extends WristLinkView {
         var iconY = m.y(52, 100);
         var iconX = (m.width - iconSize) / 2;
 
-        layout.add(new UiIconDrawable(iconX, iconY, iconSize, UiTheme.ACCENT, UiTheme.INK, launched ? "✓" : "↗"));
-        layout.add(UiFactory.centeredText(launched ? "LOCAL OUTCOME" : "PHONE REQUEST", m, m.y(104, 166), Graphics.FONT_XTINY, UiTheme.ACCENT));
-        layout.add(UiFactory.centeredText(launched ? "Ready to launch" : "Launch navigation?", m, m.y(124, 194), Graphics.FONT_LARGE, Graphics.COLOR_WHITE));
-        layout.add(UiFactory.centeredText(DemoData.NAVIGATION_DESTINATION, m, m.y(158, 238), Graphics.FONT_SMALL, UiTheme.MUTED_DARK));
+        layout.add(new UiIconDrawable(iconX, iconY, iconSize, UiTheme.ACCENT, UiTheme.INK, launched ? UiIconKind.CONFIRM : UiIconKind.NAVIGATION));
+        layout.add(UiFactory.centeredText(launched ? "LOCAL OUTCOME" : "PHONE REQUEST", m, m.y(104, 166), UiTypography.EYEBROW, UiTheme.ACCENT));
+        layout.add(UiFactory.centeredText(launched ? "Ready to launch" : "Launch navigation?", m, m.y(124, 194), UiTypography.TITLE, Graphics.COLOR_WHITE));
+        layout.add(UiFactory.centeredText(DemoData.NAVIGATION_DESTINATION, m, m.y(158, 238), UiTypography.BODY, UiTheme.MUTED_DARK));
         if (launched) {
-            layout.add(UiFactory.centeredText("No external app was opened", m, m.y(184, 276), Graphics.FONT_XTINY, UiTheme.MUTED_DARK));
+            layout.add(UiFactory.centeredText("No external app was opened", m, m.y(184, 276), UiTypography.CAPTION, UiTheme.MUTED_DARK));
             layout.add(UiFactory.button(UiFactory.string(Rez.Strings.Done), :primary, :onPrimary, (m.width - 130) / 2, m.y(212, 324), 130, 42, true, true));
         } else {
             layout.add(UiFactory.button(UiFactory.string(Rez.Strings.Launch), :primary, :onPrimary, (m.width / 2) - 108, m.y(196, 302), 100, 42, true, true));

@@ -18,7 +18,7 @@ class AboutView extends WristLinkView {
         var labels = ["App", "Contract", "UUID"] as Array<String>;
         var values = [about["platform"], about["contract"], about["uuid"]] as Array<String>;
 
-        layout.add(new UiIconDrawable(iconX, iconY, iconSize, UiTheme.INK, Graphics.COLOR_WHITE, "W"));
+        layout.add(new UiIconDrawable(iconX, iconY, iconSize, UiTheme.INK, Graphics.COLOR_WHITE, UiIconKind.LOGO));
         layout.add(UiFactory.centeredText("ABOUT", m, m.y(72, 112), Graphics.FONT_XTINY, UiTheme.TEAL));
         layout.add(UiFactory.centeredText(about["name"], m, m.y(92, 140), Graphics.FONT_LARGE, UiTheme.INK));
         for (var i = 0; i < labels.size(); i += 1) {

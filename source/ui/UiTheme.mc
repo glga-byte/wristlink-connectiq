@@ -12,6 +12,9 @@ module UiTheme {
     const MUTED_LIGHT = 0x6D706C;
     const BORDER_DARK = 0x4D4E4E;
     const BORDER_LIGHT = 0xD5D6D1;
+    const CARD_RADIUS = 14;
+    const ROW_RADIUS = 12;
+    const PROGRESS_HEIGHT = 8;
 
     function background(isDark) {
         return isDark ? DARK_BACKGROUND : LIGHT_BACKGROUND;
@@ -23,5 +26,13 @@ module UiTheme {
 
     function muted(isDark) {
         return isDark ? MUTED_DARK : MUTED_LIGHT;
+    }
+
+    function surface(isDark) {
+        return isDark ? DARK_SURFACE : LIGHT_SURFACE;
+    }
+
+    function border(isDark) {
+        return isDark ? BORDER_DARK : BORDER_LIGHT;
     }
 }

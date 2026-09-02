@@ -10,22 +10,26 @@ class ScreenDelegate extends WatchUi.BehaviorDelegate {
         _navigator = navigator;
     }
 
+    public function activate(actionId) {
+        return _view.activate(actionId);
+    }
+
     public function onPrimary() {
-        return _view.activate(:primary);
+        return activate(:primary);
     }
 
     public function onSecondary() {
-        return _view.activate(:secondary);
+        return activate(:secondary);
     }
 
     public function onTertiary() {
-        return _view.activate(:tertiary);
+        return activate(:tertiary);
     }
 
     public function onSelectable(event) {
         var selectable = event.getInstance();
         if (selectable.getState() == :stateSelected) {
-            return _view.activate(selectable.identifier);
+            return activate(selectable.identifier);
         }
         return true;
     }
@@ -36,7 +40,7 @@ class ScreenDelegate extends WatchUi.BehaviorDelegate {
     }
 
     public function onNextPage() {
-        return _view.activate(:primary);
+        return activate(:primary);
     }
 
     public function onBack() {
